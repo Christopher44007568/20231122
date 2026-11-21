@@ -1,0 +1,8 @@
+build/
+review_output/
+third_party/
+third_party/glfw/build-*/
+third_party/glslang/build/
+*.spv
+*.ppm
+*.png
