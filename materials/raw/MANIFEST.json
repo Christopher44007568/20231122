@@ -1,0 +1,26 @@
+{
+  "format": "clipfix-raw-material-v1",
+  "aggregate_sha256": "5c5642852b72e040d03e5c0689a937485706e7ef901929a1463170eab4d58ed8",
+  "files": [
+    {
+      "path": "objects/segment_01_ridge.obj",
+      "bytes": 190597,
+      "sha256": "6ea320bdf979f01242e02e931a2e431029e6a15ed61a371c25ce7817144ba30c"
+    },
+    {
+      "path": "objects/segment_02_saddle.obj",
+      "bytes": 206533,
+      "sha256": "6dd8204263f0462b51478240ed51e2739a8678cb81ab006b38a14cb1826b955d"
+    },
+    {
+      "path": "objects/segment_03_apron.obj",
+      "bytes": 190578,
+      "sha256": "e4759b4e300bafbefe34f7ca9c66979edb92d946a87f1b04be189db6c24e4507"
+    },
+    {
+      "path": "scene.raw.json",
+      "bytes": 1498,
+      "sha256": "89e9160f9fc0c31277e53618f2ba9eb239861e28974e7ec6c36dfff5b8ed8d02"
+    }
+  ]
+}

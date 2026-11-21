@@ -1,0 +1,5 @@
+/build/
+/workspace/
+/artifacts/exports/
+*.spv
+__pycache__/
