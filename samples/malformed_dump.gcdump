@@ -1,0 +1,6 @@
+# Deliberately malformed: line 4 has no ':' separator (error E1001/F1001)
+dump_id: GCD-2026-1120-0003
+device_name: VendorX Phantom-GPU 7700
+driver_version 31.0.4127.90
+checksum_expected: abc
+checksum_actual: def

@@ -1,0 +1,14 @@
+# Deliberately corrupted: checksum mismatch exercises failure code F2004
+dump_id: GCD-2026-1119-0007
+capture_time_utc: 2026-11-19T17:02:10Z
+device_name: VendorX Phantom-GPU 7700
+driver_version: 31.0.4127.90
+queue_family: 3
+checksum_expected: 1111111111111111
+checksum_actual: 2222222222222222
+extension: VK_KHR_surface status=enabled
+replay_status: completed
+replay_frames_total: 16
+replay_frames_replayed: 16
+replay_diverged_frame: none
+tail_marker: END_OF_DUMP

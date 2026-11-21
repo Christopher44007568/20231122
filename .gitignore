@@ -1,0 +1,7 @@
+build/
+third_party/debs/*.deb
+third_party/local/
+artifacts/*.ppm
+artifacts/*.png
+compile_commands.json
+*.o

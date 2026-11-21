@@ -1,0 +1,18 @@
+# GPU pre-crash state dump — captured after device loss and recovered
+# Every line is preserved verbatim; line numbers anchor the provenance chain.
+dump_id: GCD-2026-1118-0142
+capture_time_utc: 2026-11-18T09:14:22Z
+device_name: VendorX Phantom-GPU 7700
+driver_version: 31.0.4127.90
+queue_family: 3
+checksum_expected: 9f2c1a77e0b4d8a1
+checksum_actual: 9f2c1a77e0b4d8a1
+extension: VK_KHR_swapchain status=enabled
+extension: VK_EXT_debug_utils status=enabled
+extension: VK_VENDORX_phantom_inference status=enabled
+replay_status: completed
+replay_frames_total: 128
+replay_frames_replayed: 128
+replay_diverged_frame: 47
+replay_notes: frame 47 uses VK_VENDORX_phantom_inference; reference output unavailable
+tail_marker: END_OF_DUMP
