@@ -1,0 +1,448 @@
+{
+  "schema": "vfcr.frustum-replay/v1",
+  "toolVersion": "1.0.0",
+  "sessionId": "VFC-SESSION-0057",
+  "sceneId": "TRACE-2026-11-22",
+  "frameId": "FRAME-18422",
+  "createdAt": "2026-11-21T18:00:38Z",
+  "updatedAt": "2026-11-21T18:00:57Z",
+  "camera": {
+    "position": [
+      0,
+      2.2,
+      -1
+    ],
+    "yawDeg": 0,
+    "pitchDeg": -4,
+    "fovYDeg": 56,
+    "nearZ": 2,
+    "farZ": 42,
+    "aspect": 1.77777777777778
+  },
+  "clock": {
+    "deviceA": "CAM-A/ALPHA",
+    "deviceB": "CAM-B/BRAVO",
+    "offsetMs": 420,
+    "method": "PTP_OFFSET_APPLIED",
+    "confidence": "MEDIUM",
+    "baselineSampleA": 11.5
+  },
+  "missing": {
+    "id": "GAP-017",
+    "startA": 17,
+    "endA": 21.4,
+    "reason": "B PACKET DROP / DESYNC WINDOW",
+    "source": "DEVICE_B"
+  },
+  "objects": [
+    {
+      "id": "OBJ-731",
+      "label": "CRATE_03",
+      "kind": "PROP",
+      "basePosition": [
+        3.5,
+        1,
+        8
+      ],
+      "halfExtents": [
+        1,
+        1,
+        1
+      ],
+      "motion": {
+        "amplitude": [
+          0.8,
+          0,
+          1.5
+        ],
+        "periodSec": 19,
+        "phaseRad": 0.4
+      },
+      "triangles": 1248,
+      "baselineKnown": true,
+      "baselineVisible": true,
+      "baselineCostMs": 1.2608,
+      "runs": []
+    },
+    {
+      "id": "OBJ-204",
+      "label": "DRONE_12",
+      "kind": "DYNAMIC",
+      "basePosition": [
+        -7,
+        1.5,
+        14
+      ],
+      "halfExtents": [
+        1.5,
+        1,
+        1.5
+      ],
+      "motion": {
+        "amplitude": [
+          -1.2,
+          0.4,
+          1.2
+        ],
+        "periodSec": 17,
+        "phaseRad": 1
+      },
+      "triangles": 2864,
+      "baselineKnown": true,
+      "baselineVisible": true,
+      "baselineCostMs": 2.6344,
+      "runs": []
+    },
+    {
+      "id": "OBJ-988",
+      "label": "GATE_07",
+      "kind": "STRUCTURE",
+      "basePosition": [
+        13,
+        1,
+        17
+      ],
+      "halfExtents": [
+        2,
+        2,
+        1
+      ],
+      "motion": {
+        "amplitude": [
+          1.5,
+          0,
+          0.5
+        ],
+        "periodSec": 22,
+        "phaseRad": 2
+      },
+      "triangles": 5320,
+      "baselineKnown": true,
+      "baselineVisible": true,
+      "baselineCostMs": 4.722,
+      "runs": []
+    },
+    {
+      "id": "OBJ-112",
+      "label": "BEACON_04",
+      "kind": "SIGNAL",
+      "basePosition": [
+        5,
+        1.2,
+        12
+      ],
+      "halfExtents": [
+        0.8,
+        2,
+        0.8
+      ],
+      "motion": {
+        "amplitude": [
+          0.6,
+          0,
+          1
+        ],
+        "periodSec": 15,
+        "phaseRad": 0.7
+      },
+      "triangles": 880,
+      "baselineKnown": false,
+      "baselineVisible": false,
+      "baselineCostMs": 0,
+      "runs": [
+        {
+          "sequence": 1,
+          "startedAt": "2026-11-21T18:00:38Z",
+          "sampleA": 19.25,
+          "clockOffsetMs": 420,
+          "visible": true,
+          "baselineKnown": false,
+          "changed": false,
+          "costMs": 0.948,
+          "cause": "MISSING_SEGMENT_RECOVERY",
+          "inputHash": "4425ea9540503dbae9426ab7f3a60d3221140b87ea96eaae15a7101baa82b30e"
+        }
+      ]
+    },
+    {
+      "id": "OBJ-553",
+      "label": "LAMP_09",
+      "kind": "PROP",
+      "basePosition": [
+        -24,
+        1,
+        24
+      ],
+      "halfExtents": [
+        1,
+        1,
+        1
+      ],
+      "motion": {
+        "amplitude": [
+          1,
+          0,
+          1
+        ],
+        "periodSec": 18,
+        "phaseRad": 0.2
+      },
+      "triangles": 640,
+      "baselineKnown": true,
+      "baselineVisible": false,
+      "baselineCostMs": 0.659,
+      "runs": []
+    },
+    {
+      "id": "OBJ-067",
+      "label": "PYLON_21",
+      "kind": "STRUCTURE",
+      "basePosition": [
+        10,
+        1,
+        43
+      ],
+      "halfExtents": [
+        2,
+        3,
+        2
+      ],
+      "motion": {
+        "amplitude": [
+          2,
+          0,
+          1
+        ],
+        "periodSec": 16,
+        "phaseRad": 2.5
+      },
+      "triangles": 4120,
+      "baselineKnown": true,
+      "baselineVisible": false,
+      "baselineCostMs": 3.617,
+      "runs": []
+    }
+  ],
+  "evidence": [
+    {
+      "sequence": 1,
+      "at": "2026-11-21T18:00:38Z",
+      "kind": "SESSION_CREATED",
+      "objectId": "",
+      "detail": "TRACE LOADED / 6 OBJECTS / CLOCK OFFSET +420ms",
+      "previous": "0000000000000000000000000000000000000000000000000000000000000000",
+      "digest": "d1aa6438a7e0063cbdbcf1f2f27d3c54a41604cc337b90f347ef1023e620e6fb"
+    },
+    {
+      "sequence": 2,
+      "at": "2026-11-21T18:00:38Z",
+      "kind": "RERUN_RECOVERY",
+      "objectId": "OBJ-112",
+      "detail": "RUN 01 / VISIBLE / T=19.25s / 4425ea9540",
+      "previous": "d1aa6438a7e0063cbdbcf1f2f27d3c54a41604cc337b90f347ef1023e620e6fb",
+      "digest": "753031aefabd99dcc31ef76fa44d813ca35fbd19e8ab5ea535a8ddbfda8ead6a"
+    },
+    {
+      "sequence": 3,
+      "at": "2026-11-21T18:00:57Z",
+      "kind": "EXPORT_RECORD",
+      "objectId": "",
+      "detail": "BUNDLE 20261121T180057Z-FRAME-18422-01-OBJ-112 / OFFSET +420ms / focus OBJ-112 / SCREENSHOT d89c7a63d064",
+      "previous": "753031aefabd99dcc31ef76fa44d813ca35fbd19e8ab5ea535a8ddbfda8ead6a",
+      "digest": "fac91f9c97bd1f2d4e5c34283ef148c4a2d0e3f1ed72087a4bff45295b970938"
+    }
+  ],
+  "selectedObject": 3,
+  "compareSequence": 1,
+  "playhead": 19.25,
+  "playing": false,
+  "exportCount": 1,
+  "lastExport": "exports/20261121T180057Z-FRAME-18422-01-OBJ-112",
+  "recordFormat": "vfcr.correction-record/v1",
+  "recordEncoding": "UTF-8",
+  "sourceSessionSchema": "vfcr.frustum-replay/v1",
+  "tool": {
+    "name": "VFC Replay / Local Correction Workbench",
+    "version": "1.0.0",
+    "language": "C++17",
+    "graphicsApi": "Vulkan",
+    "windowing": "GLFW",
+    "deterministicRerun": true
+  },
+  "exportScope": {
+    "kind": "SELECTED_OBJECT",
+    "focusObjectId": "OBJ-112",
+    "focusLabel": "BEACON_04",
+    "containsAllObjects": true,
+    "note": "Selected object is the review focus; all objects remain embedded for context."
+  },
+  "clockReview": {
+    "deviceA": "CAM-A/ALPHA",
+    "deviceB": "CAM-B/BRAVO",
+    "offsetBMinusAMs": 420,
+    "correction": "sampleA = sampleB - offset",
+    "method": "PTP_OFFSET_APPLIED",
+    "confidence": "MEDIUM",
+    "baselineSampleA": 11.5,
+    "rawBWindowStart": 17.42,
+    "rawBWindowEnd": 21.82
+  },
+  "missingFragmentReview": {
+    "id": "GAP-017",
+    "startA": 17,
+    "endA": 21.4,
+    "durationSec": 4.4,
+    "source": "DEVICE_B",
+    "reason": "B PACKET DROP / DESYNC WINDOW",
+    "recoveryPolicy": "PER_OBJECT_RERUN_AT_CORRECTED_A_TIME"
+  },
+  "reloadContract": {
+    "preserveFieldOrder": true,
+    "objectFieldOrder": [
+      "id",
+      "label",
+      "kind",
+      "basePosition",
+      "halfExtents",
+      "motion",
+      "triangles",
+      "baselineKnown",
+      "baselineVisible",
+      "baselineCostMs",
+      "runs"
+    ],
+    "runFieldOrder": [
+      "sequence",
+      "startedAt",
+      "sampleA",
+      "clockOffsetMs",
+      "visible",
+      "baselineKnown",
+      "changed",
+      "costMs",
+      "cause",
+      "inputHash"
+    ],
+    "evidenceFieldOrder": [
+      "sequence",
+      "at",
+      "kind",
+      "objectId",
+      "detail",
+      "previous",
+      "digest"
+    ],
+    "sessionFieldOrder": [
+      "schema",
+      "toolVersion",
+      "sessionId",
+      "sceneId",
+      "frameId",
+      "createdAt",
+      "updatedAt",
+      "camera",
+      "clock",
+      "missing",
+      "objects",
+      "evidence",
+      "selectedObject",
+      "compareSequence",
+      "playhead",
+      "playing",
+      "exportCount",
+      "lastExport"
+    ]
+  },
+  "screenshot": {
+    "file": "frame.ppm",
+    "available": true,
+    "sha256": "d89c7a63d064fb839af758a2d18d06c82df8b393326e42ec68b341d418a06fc5",
+    "width": 1240,
+    "height": 760,
+    "format": "PPM/P6"
+  },
+  "assertions": [
+    {
+      "id": "clock.window.valid",
+      "status": "PASS",
+      "detail": "missing fragment has positive duration"
+    },
+    {
+      "id": "clock.offset.bounded",
+      "status": "PASS",
+      "detail": "B-A offset is within +/-2000 ms"
+    },
+    {
+      "id": "evidence.chain.head",
+      "status": "PASS",
+      "detail": "head=fac91f9c97bd1f2d4e5c34283ef148c4a2d0e3f1ed72087a4bff45295b970938"
+    },
+    {
+      "id": "replay.object.count",
+      "status": "PASS",
+      "detail": "objects=6"
+    },
+    {
+      "id": "export.scope.focus",
+      "status": "PASS",
+      "detail": "object=OBJ-112"
+    },
+    {
+      "id": "baseline.OBJ-731",
+      "status": "PASS",
+      "detail": "expected=true recomputed=true"
+    },
+    {
+      "id": "baseline.OBJ-204",
+      "status": "PASS",
+      "detail": "expected=true recomputed=true"
+    },
+    {
+      "id": "baseline.OBJ-988",
+      "status": "PASS",
+      "detail": "expected=true recomputed=true"
+    },
+    {
+      "id": "baseline.OBJ-112",
+      "status": "PASS",
+      "detail": "baseline unavailable inside missing fragment"
+    },
+    {
+      "id": "run.OBJ-112.1.visibility",
+      "status": "PASS",
+      "detail": "expected=true recomputed=true"
+    },
+    {
+      "id": "run.OBJ-112.1.inputHash",
+      "status": "PASS",
+      "detail": "sha256=4425ea9540503dbae9426ab7f3a60d3221140b87ea96eaae15a7101baa82b30e"
+    },
+    {
+      "id": "baseline.OBJ-553",
+      "status": "PASS",
+      "detail": "expected=false recomputed=false"
+    },
+    {
+      "id": "baseline.OBJ-067",
+      "status": "PASS",
+      "detail": "expected=false recomputed=false"
+    }
+  ],
+  "verification": {
+    "command": "vfcr-verify <record.json>",
+    "independent": true,
+    "requirements": "No session file, GPU, or GUI state is required.",
+    "canonicalization": "vfcr-json-v1 ordered objects, UTF-8, no insignificant space"
+  },
+  "bundle": {
+    "record": "record.json",
+    "screenshot": "frame.ppm",
+    "screenshotSha256": "d89c7a63d064fb839af758a2d18d06c82df8b393326e42ec68b341d418a06fc5",
+    "recordSha256": "see integrity.recordSha256"
+  },
+  "integrity": {
+    "algorithm": "SHA-256",
+    "canonicalization": "vfcr-json-v1",
+    "recordSha256": "4e12a122265f828fd24ea660e2850015bcb83d7c9b80549cecd7f327008ee536"
+  }
+}
