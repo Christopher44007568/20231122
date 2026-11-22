@@ -1,0 +1,7 @@
+/build*/
+/.deps/
+/artifacts/regression-*/
+*.spv
+*.ppm
+*.pam
+*.log

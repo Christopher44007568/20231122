@@ -1,0 +1,56 @@
+{
+  "schema": "raster-regression/v1",
+  "name": "shared-edge-top-left",
+  "framebuffer": { "width": 64, "height": 64 },
+  "clear_color": [10, 10, 20, 255],
+  "vertices": [
+    { "position": [-0.8, -0.6, 0.0, 1.0], "rgba": [255, 0, 0, 255] },
+    { "position": [ 0.8, -0.6, 0.0, 1.0], "rgba": [255, 0, 0, 255] },
+    { "position": [-0.2,  0.6, 0.0, 1.0], "rgba": [255, 0, 0, 255] },
+    { "position": [ 0.8, -0.6, 0.0, 1.0], "rgba": [0, 255, 0, 255] },
+    { "position": [ 0.8,  0.6, 0.0, 1.0], "rgba": [0, 255, 0, 255] },
+    { "position": [-0.2,  0.6, 0.0, 1.0], "rgba": [0, 255, 0, 255] }
+  ],
+  "indices": [0, 1, 2, 3, 4, 5],
+  "rules": [
+    {
+      "id": "baseline",
+      "polygon_mode": "fill",
+      "cull_mode": "none",
+      "front_face": "ccw",
+      "line_width": 1.0
+    },
+    {
+      "id": "additive",
+      "polygon_mode": "fill",
+      "cull_mode": "none",
+      "front_face": "ccw",
+      "line_width": 1.0,
+      "additive_blend": true
+    }
+  ],
+  "draws": [
+    { "id": "left", "first_index": 0, "index_count": 3 },
+    { "id": "right", "first_index": 3, "index_count": 3 }
+  ],
+  "passes": [
+    { "id": "baseline", "rule": "baseline", "draws": ["left", "right"] },
+    { "id": "additive", "rule": "additive", "draws": ["left", "right"] }
+  ],
+  "shared_edges": [
+    {
+      "id": "diagonal",
+      "draw_a": "left",
+      "draw_b": "right",
+      "a": [0.8, -0.6],
+      "b": [-0.2, 0.6]
+    }
+  ],
+  "reference_pixels": [
+    { "pass": "baseline", "x": 16, "y": 26, "rgba": [255, 0, 0, 255], "tolerance": 1 },
+    { "pass": "baseline", "x": 48, "y": 26, "rgba": [0, 255, 0, 255], "tolerance": 1 },
+    { "pass": "baseline", "x": 2, "y": 2, "rgba": [10, 10, 20, 255], "tolerance": 0 },
+    { "pass": "additive", "x": 16, "y": 26, "rgba": [255, 10, 20, 255], "tolerance": 1 },
+    { "pass": "additive", "x": 42, "y": 32, "rgba": [10, 255, 20, 255], "tolerance": 1 }
+  ]
+}

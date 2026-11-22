@@ -1,0 +1,50 @@
+{
+  "schema": "raster-regression/v1",
+  "name": "extreme-parameters",
+  "framebuffer": { "width": 1, "height": 1 },
+  "clear_color": [7, 11, 13, 255],
+  "vertices": [
+    { "position": [-1.0e20, -1.0e20, -1.0e20, 1.0], "rgba": [255, 0, 0, 255] },
+    { "position": [ 1.0e20, -1.0e20,  1.0e20, 1.0], "rgba": [255, 0, 0, 255] },
+    { "position": [ 0.0,     1.0e20,  0.0,    1.0], "rgba": [255, 0, 0, 255] },
+    { "position": [ 0.0,     0.0,     0.0,    1.0], "rgba": [0, 255, 0, 255] },
+    { "position": [ 0.0,     0.0,     0.0,    1.0], "rgba": [0, 255, 0, 255] },
+    { "position": [ 0.0,     0.0,     0.0,    1.0], "rgba": [0, 255, 0, 255] }
+  ],
+  "indices": [0, 1, 2, 3, 4, 5],
+  "rules": [
+    { "id": "huge", "cull_mode": "none", "line_width": 1.0 },
+    { "id": "degenerate", "cull_mode": "none", "line_width": 1.0 },
+    { "id": "discard", "cull_mode": "none", "line_width": 1.0, "rasterizer_discard": true },
+    { "id": "point", "polygon_mode": "point", "cull_mode": "none", "line_width": 1.0 },
+    {
+      "id": "clamped-viewport",
+      "cull_mode": "none",
+      "line_width": 1.0,
+      "viewport_x": -1000000.0,
+      "viewport_y": -1000000.0,
+      "viewport_width": 1000000.0,
+      "viewport_height": 1000000.0,
+      "scissor_x": 1000000.0,
+      "scissor_y": 1000000.0,
+      "scissor_width": 1000000.0,
+      "scissor_height": 1000000.0
+    }
+  ],
+  "draws": [
+    { "id": "huge_triangle", "first_index": 0, "index_count": 3 },
+    { "id": "zero_area", "first_index": 3, "index_count": 3 }
+  ],
+  "passes": [
+    { "id": "huge", "rule": "huge", "draws": ["huge_triangle"] },
+    { "id": "degenerate", "rule": "degenerate", "draws": ["zero_area"] },
+    { "id": "discard", "rule": "discard", "draws": ["huge_triangle"] },
+    { "id": "point", "rule": "point", "draws": ["huge_triangle"] },
+    { "id": "clamped", "rule": "clamped-viewport", "draws": ["huge_triangle"] }
+  ],
+  "shared_edges": [],
+  "reference_pixels": [
+    { "pass": "degenerate", "x": 0, "y": 0, "rgba": [7, 11, 13, 255], "tolerance": 0 },
+    { "pass": "discard", "x": 0, "y": 0, "rgba": [7, 11, 13, 255], "tolerance": 0 }
+  ]
+}

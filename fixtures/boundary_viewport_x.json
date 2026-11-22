@@ -1,0 +1,32 @@
+{
+  "schema": "raster-regression/v1",
+  "name": "viewport-x-zero-boundary",
+  "framebuffer": { "width": 64, "height": 64 },
+  "clear_color": [3, 5, 7, 255],
+  "vertices": [
+    { "position": [-0.8, -0.6, 0.0, 1.0], "rgba": [240, 80, 20, 255] },
+    { "position": [ 0.8, -0.6, 0.0, 1.0], "rgba": [240, 80, 20, 255] },
+    { "position": [ 0.0,  0.8, 0.0, 1.0], "rgba": [240, 80, 20, 255] }
+  ],
+  "indices": [0, 1, 2],
+  "rules": [
+    { "id": "minus_half_pixel", "polygon_mode": "fill", "viewport_x": -0.75 },
+    { "id": "plus_half_pixel", "polygon_mode": "fill", "viewport_x": 0.75 }
+  ],
+  "draws": [
+    { "id": "triangle", "first_index": 0, "index_count": 3 }
+  ],
+  "passes": [
+    { "id": "before", "rule": "minus_half_pixel", "draws": ["triangle"] },
+    { "id": "after", "rule": "plus_half_pixel", "draws": ["triangle"] }
+  ],
+  "shared_edges": [],
+  "reference_pixels": [],
+  "boundary": {
+    "parameter": "viewport_x",
+    "before_pass": "before",
+    "after_pass": "after",
+    "threshold": 0.0,
+    "sample_pixel": [21, 38]
+  }
+}
