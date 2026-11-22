@@ -1,0 +1,6 @@
+# 对照组: 中途取消并中止后续步骤, 验证工作确实未生效
+create_buffer A 4096
+record_fill A 0x11
+cancel_pending 用户中途取消
+expect_buffer A 0x00
+abort_remaining 对照组中止

@@ -1,0 +1,7 @@
+# 基线: 完整生命周期, 无取消
+create_buffer A 4096
+record_fill A 0x01
+submit S1
+expect_buffer A 0x01
+checkpoint final
+destroy A

@@ -1,0 +1,9 @@
+# 顺序改变验证 B: 先 B 后 A, 最终检查点哈希应与 A 一致
+create_buffer B 4096
+create_buffer A 2048
+record_fill B 0x0B
+record_fill A 0x0A
+submit S1
+checkpoint final
+destroy B
+destroy A

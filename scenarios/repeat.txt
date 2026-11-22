@@ -1,0 +1,9 @@
+# 重复提交验证: 同一填充提交两次(幂等), 重复销毁应被检测为 ERROR
+create_buffer A 4096
+record_fill A 0x5A
+submit S1
+record_fill A 0x5A
+submit S2
+expect_buffer A 0x5A
+destroy A
+destroy A

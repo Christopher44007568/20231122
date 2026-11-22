@@ -1,0 +1,11 @@
+# 实验组: 中途取消(丢弃未提交命令)后重录重提
+create_buffer A 4096
+record_fill A 0x11
+record_fill A 0x22
+cancel_pending 用户中途取消
+checkpoint after_cancel
+record_fill A 0xAB
+submit S1
+expect_buffer A 0xAB
+checkpoint final
+destroy A

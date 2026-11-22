@@ -1,0 +1,3 @@
+build/
+.tmp/
+third_party/glfw-build/

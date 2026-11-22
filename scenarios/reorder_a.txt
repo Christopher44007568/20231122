@@ -1,0 +1,9 @@
+# 顺序改变验证 A: 先 A 后 B
+create_buffer A 2048
+create_buffer B 4096
+record_fill A 0x0A
+record_fill B 0x0B
+submit S1
+checkpoint final
+destroy A
+destroy B
