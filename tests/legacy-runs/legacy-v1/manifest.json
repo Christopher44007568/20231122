@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "run_id": "legacy-v1",
+  "started": "2023-11-22T10:00:00Z",
+  "finished": "2023-11-22T10:00:05Z",
+  "status": "COMPLETED",
+  "gpu": "legacy-gpu",
+  "texture": "gradient",
+  "w": 64,
+  "h": 64,
+  "results": [
+    {"codec": "BC1", "gen": "legacy", "psnr": 38.5},
+    {"codec": "BC3", "gen": "legacy", "psnr": 39.1}
+  ]
+}
