@@ -1,0 +1,82 @@
+#version 450
+
+layout(local_size_x = 256) in;
+
+layout(push_constant) uniform TilePush {
+    uint tile;
+    uint seedLo;
+    uint seedHi;
+    uint densityMilli;
+    uint jitterMilli;
+    uint altitudeMilli;
+    uint slopeBiasMilli;
+    uint windMilli;
+    uint capacity;
+    uint tileSize;
+    uint boundaryBoostMilli;
+    uint reserved;
+} pc;
+
+layout(std430, binding = 0) buffer Output {
+    uint count;
+    uint pad0;
+    uint pad1;
+    uint pad2;
+    vec4 data[];
+} outBuffer;
+
+uint hash4(uint a, uint b, uint c, uint d) {
+    uint h = a * 0x9E3779B1u;
+    h ^= b * 0x85EBCA77u;
+    h = (h << 13) | (h >> 19);
+    h ^= c * 0xC2B2AE3Du;
+    h *= 0x27D4EB2Fu;
+    h ^= d + 0x165667B1u;
+    h ^= h >> 15;
+    h *= 0x85EBCA77u;
+    h ^= h >> 13;
+    return h;
+}
+
+uint scaled12(uint h, uint span) {
+    return ((h >> 20u) * span) >> 12u;
+}
+
+void main() {
+    uint lane = gl_GlobalInvocationID.x;
+    uint tileColumn = pc.tile & 7u;
+    uint tileRow = pc.tile >> 3u;
+    uint base = 240u + (hash4(pc.tile, pc.seedLo, pc.seedHi, 0x11u) % 720u);
+    uint extra = (pc.densityMilli * 232u) / 1000u;
+    uint boosted = extra + (pc.boundaryBoostMilli * 180u) / 1000u;
+    uint target = min(pc.capacity, base + boosted);
+
+    if (lane == 0u) {
+        outBuffer.count = target;
+    }
+    if (lane >= target) {
+        return;
+    }
+
+    uint hx = hash4(pc.tile, lane, pc.seedLo, 0xA511E9B3u);
+    uint hy = hash4(pc.tile, lane, pc.seedHi, 0x63D83595u);
+    uint hz = hash4(pc.tile, lane, pc.seedLo ^ pc.seedHi, 0x7FEB352Du);
+    uint hk = hash4(pc.tile, lane, pc.tileSize, 0x846CA68Bu);
+
+    int jitter = int(scaled12(hy, pc.jitterMilli)) - int(pc.jitterMilli / 2u);
+    int slope = int(scaled12(hk, pc.slopeBiasMilli)) - int(pc.slopeBiasMilli / 2u);
+    int windSign = int((hk >> 16u) & 1023u) - 511;
+    uint windMag = (uint(abs(windSign)) * pc.windMilli) / 1000000u;
+    int windHalf = (windSign < 0) ? -int(windMag / 2u) : int(windMag / 2u);
+    int wind = (windSign < 0) ? -int(windMag) : int(windMag);
+
+    int xMilli = int(tileColumn * pc.tileSize * 1000u) +
+                 int(scaled12(hx, pc.tileSize * 1000u)) + wind;
+    int zMilli = int(tileRow * pc.tileSize * 1000u) +
+                 int(scaled12(hz, pc.tileSize * 1000u)) - windHalf;
+    int yMilli = int(pc.altitudeMilli) + jitter + slope;
+    vec3 position = vec3(float(xMilli), float(yMilli), float(zMilli)) * 0.001;
+
+    outBuffer.data[lane] =
+        vec4(position, float((hk >> 8u) & 3u));
+}
