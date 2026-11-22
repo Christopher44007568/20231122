@@ -1,0 +1,53 @@
+#version 450
+// Density estimation for the local correction pass.
+// For each point in the current chunk, count neighbors within radius
+// using a uniform grid (cell size >= radius guarantees correctness),
+// then set the clipped flag when the count falls outside [min, max].
+layout(local_size_x = 256) in;
+
+layout(std430, binding = 0) buffer Points { vec4 pts[]; };
+layout(std430, binding = 1) buffer Order { uint order[]; };
+layout(std430, binding = 2) buffer CellStart { uint cell_start[]; };
+layout(std430, binding = 3) buffer CellCount { uint cell_count[]; };
+
+layout(push_constant) uniform PC {
+  vec4 origin_cell;  // xyz: grid origin, w: cell size
+  ivec4 dims_base;   // xyz: grid dims, w: chunk base index
+  ivec4 counts;      // x: chunk count, y: min_neighbors, z: max_neighbors
+  vec4 params;       // x: radius^2
+} pc;
+
+int cell_index(ivec3 c) {
+  if (any(lessThan(c, ivec3(0))) ||
+      any(greaterThanEqual(c, pc.dims_base.xyz)))
+    return -1;
+  return c.x + pc.dims_base.x * (c.y + pc.dims_base.y * c.z);
+}
+
+void main() {
+  uint gi = gl_GlobalInvocationID.x;
+  if (gi >= uint(pc.counts.x)) return;
+  uint idx = uint(pc.dims_base.w) + gi;
+  vec3 p = pts[idx].xyz;
+  ivec3 home = ivec3(floor((p - pc.origin_cell.xyz) / pc.origin_cell.w));
+  float r2 = pc.params.x;
+  uint n = 0;
+  for (int dz = -1; dz <= 1; ++dz)
+  for (int dy = -1; dy <= 1; ++dy)
+  for (int dx = -1; dx <= 1; ++dx) {
+    int ci = cell_index(home + ivec3(dx, dy, dz));
+    if (ci < 0) continue;
+    uint s = cell_start[ci];
+    uint e = s + cell_count[ci];
+    for (uint k = s; k < e; ++k) {
+      uint j = order[k];
+      if (j == idx) continue;
+      vec3 d = pts[j].xyz - p;
+      if (dot(d, d) <= r2) ++n;
+    }
+  }
+  uint flags = floatBitsToUint(pts[idx].w);
+  if (n < uint(pc.counts.y) || n > uint(pc.counts.z))
+    flags |= 1u;  // clipped
+  pts[idx] = vec4(p, uintBitsToFloat(flags));
+}
