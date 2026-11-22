@@ -1,0 +1,46 @@
+{
+  "schema": "gbi.scene/1",
+  "name": "deferred-gbuffer-anchor-scene",
+  "description": "Immutable source material. The inspector only reads this file.",
+  "camera": {
+    "kind": "orthographic",
+    "eye": [0.0, 0.0, 2.6],
+    "target": [0.0, 0.0, 0.0],
+    "up": [0.0, 1.0, 0.0],
+    "scale": [1.85, 1.15],
+    "near": 0.1,
+    "far": 8.0
+  },
+  "objects": [
+    {
+      "id": "cube",
+      "shape": "cube",
+      "position": [-0.62, 0.04, 0.0],
+      "rotation_deg": [0.0, 22.0, 0.0],
+      "scale": [0.42, 0.42, 0.42],
+      "albedo": [0.91, 0.24, 0.16],
+      "roughness": 0.28,
+      "metallic": 0.0
+    },
+    {
+      "id": "panel",
+      "shape": "cube",
+      "position": [0.0, -0.02, -0.16],
+      "rotation_deg": [0.0, -16.0, 0.0],
+      "scale": [0.55, 0.18, 0.18],
+      "albedo": [0.18, 0.62, 0.36],
+      "roughness": 0.52,
+      "metallic": 0.1
+    },
+    {
+      "id": "prism",
+      "shape": "prism",
+      "position": [0.64, -0.08, 0.18],
+      "rotation_deg": [0.0, -28.0, 0.0],
+      "scale": [0.38, 0.54, 0.38],
+      "albedo": [0.19, 0.44, 0.88],
+      "roughness": 0.36,
+      "metallic": 0.25
+    }
+  ]
+}

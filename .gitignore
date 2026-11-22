@@ -1,0 +1,12 @@
+/build/
+/build-*/
+/.cache/
+/gbi-e2e.*
+/demo-workspace/
+/workspace/
+/workspace-*/
+/gbuffer-workspace/
+*.spv.tmp
+*.ppm
+*.bin
+__pycache__/
