@@ -1,0 +1,6 @@
+/build/
+/artifacts/demo/
+/.tools/
+__pycache__/
+*.pyc
+
