@@ -1,0 +1,4 @@
+build/
+artifacts/shadow-review/
+artifacts/self-test/
+.lshc-tmp-*
