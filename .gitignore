@@ -1,0 +1,7 @@
+/build/
+/build-*/
+/.tmp/
+*.o
+*.spv
+compile_commands.json
+.cache/
