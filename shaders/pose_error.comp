@@ -1,0 +1,79 @@
+#version 450
+
+layout(local_size_x = 64) in;
+
+struct Pose {
+  vec4 rotation;
+  vec4 translation;
+};
+
+struct Frame {
+  Pose bones[8];
+  float time_us;
+  float pad0;
+  float pad1;
+  float pad2;
+};
+
+layout(std430, binding = 0) readonly buffer FrameBuffer {
+  Frame frames[];
+};
+
+layout(std430, binding = 1) readonly buffer BoundBuffer {
+  Frame bounds[2];
+};
+
+layout(std430, binding = 2) writeonly buffer ErrorBuffer {
+  vec4 errors[];
+};
+
+layout(push_constant) uniform PushConstants {
+  uint start_index;
+  uint end_index;
+} pc;
+
+vec4 slerp_shortest(vec4 a, vec4 b, float t) {
+  float cosine = dot(a, b);
+  if (cosine < 0.0) {
+    b = -b;
+    cosine = -cosine;
+  }
+  if (cosine > 0.9995) {
+    return normalize(mix(a, b, t));
+  }
+  float theta = acos(clamp(cosine, -1.0, 1.0));
+  float sine = sin(theta);
+  float wa = sin((1.0 - t) * theta) / sine;
+  float wb = sin(t * theta) / sine;
+  return normalize(a * wa + b * wb);
+}
+
+void main() {
+  uint index = gl_GlobalInvocationID.x;
+  if (index < pc.start_index || index > pc.end_index) {
+    return;
+  }
+  Frame start = bounds[0];
+  Frame end = bounds[1];
+  float duration = end.time_us - start.time_us;
+  if (abs(duration) < 1.0e-6) {
+    errors[index] = vec4(0.0);
+    return;
+  }
+  float t = (frames[index].time_us - start.time_us) / duration;
+  float max_angle = 0.0;
+  float max_translation = 0.0;
+  for (int bone = 0; bone < 8; ++bone) {
+    vec4 q = slerp_shortest(start.bones[bone].rotation,
+                            end.bones[bone].rotation, t);
+    float absolute_dot = min(abs(dot(normalize(frames[index].bones[bone].rotation), q)), 1.0);
+    float angle = 2.0 * acos(absolute_dot) * 57.29577951308232;
+    max_angle = max(max_angle, angle);
+    vec3 interpolated = mix(start.bones[bone].translation.xyz,
+                            end.bones[bone].translation.xyz, t);
+    float translation_error =
+        length(frames[index].bones[bone].translation.xyz - interpolated);
+    max_translation = max(max_translation, translation_error);
+  }
+  errors[index] = vec4(max_angle, max_translation, 0.0, 1.0);
+}

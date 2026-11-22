@@ -1,0 +1,6 @@
+/build/
+/.deps/
+*.roundtrip.json
+*.tmp
+*.spv
+/.tmp/
