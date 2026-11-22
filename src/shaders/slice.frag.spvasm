@@ -1,0 +1,78 @@
+; Samples one layer (slice) of the RGBA8 2D-array voxel texture.
+cap Shader
+extinst %glsl = "GLSL.std.450"
+memmodel Logical GLSL450
+entry Fragment %main "main" %inuv %color
+mode %main OriginUpperLeft
+
+decorate %inuv Location 0
+decorate %color Location 0
+decorate %tex DescriptorSet 0
+decorate %tex Binding 0
+decorate %pc Block
+memberdecorate %pc 0 Offset 0
+memberdecorate %pc 1 Offset 4
+memberdecorate %pc 2 Offset 8
+memberdecorate %pc 3 Offset 12
+name %pc "PushConstants"
+name %main "main"
+
+%void = OpTypeVoid
+%f32 = OpTypeFloat 32
+%i32 = OpTypeInt 32 1
+%u32 = OpTypeInt 32 0
+%v2f = OpTypeVector %f32 2
+%v4f = OpTypeVector %f32 4
+%v3i = OpTypeVector %i32 3
+; OpTypeImage result sampled=1 (sampled at runtime), format=Unknown(0)
+%img = OpTypeImage %f32 Dim2D 0 1 0 1 Unknown
+%sim = OpTypeSampledImage %img
+%fn = OpTypeFunction %void
+
+global %c0 = OpConstant %i32 0
+global %c1 = OpConstant %i32 1
+global %c2 = OpConstant %i32 2
+global %c3 = OpConstant %i32 3
+global %u0 = OpConstant %u32 0
+
+%pc = OpTypeStruct %f32 %f32 %f32 %f32
+%ppc = OpTypePointer PushConstant %pc
+%pf32pc = OpTypePointer PushConstant %f32
+%pv2in = OpTypePointer Input %v2f
+%pv4out = OpTypePointer Output %v4f
+%psim = OpTypePointer UniformConstant %sim
+%pfunv2 = OpTypePointer Function %v2f
+%pfunv4 = OpTypePointer Function %v4f
+%pfuni = OpTypePointer Function %i32
+
+%inuv = OpVariable %pv2in Input
+%color = OpVariable %pv4out Output
+%tex = OpVariable %psim UniformConstant
+%pcvar = OpVariable %ppc PushConstant
+
+%main = OpFunction %void 0 %fn
+%entry = OpLabel
+%uv = OpLoad %v2f %inuv
+%xf = OpCompositeExtract %f32 %uv 0
+%yf = OpCompositeExtract %f32 %uv 1
+%xi = OpConvertFToS %i32 %xf
+%yi = OpConvertFToS %i32 %yf
+%wptr = OpAccessChain %pf32pc %pcvar %c0
+%hptr = OpAccessChain %pf32pc %pcvar %c1
+%sptr = OpAccessChain %pf32pc %pcvar %c2
+%wf = OpLoad %f32 %wptr
+%hf = OpLoad %f32 %hptr
+%sf = OpLoad %f32 %sptr
+%wmax = OpConvertFToS %i32 %wf
+%hmax = OpConvertFToS %i32 %hf
+%wlast = OpISub %i32 %wmax %c1
+%hlast = OpISub %i32 %hmax %c1
+%xcl = OpExtInst %i32 %glsl SClamp %xi %c0 %wlast
+%ycl = OpExtInst %i32 %glsl SClamp %yi %c0 %hlast
+%layer = OpConvertFToS %i32 %sf
+%coord = OpCompositeConstruct %v3i %xcl %ycl %layer
+%t = OpLoad %sim %tex
+%texel = OpImageFetch %v4f %t %coord %u0
+OpStore %color %texel
+OpReturn
+OpFunctionEnd

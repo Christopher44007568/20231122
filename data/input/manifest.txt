@@ -1,0 +1,12 @@
+obj_alpha
+snapshot.vox1
+snapshot.vox2
+obj_beta
+snapshot.vox1
+snapshot.vox2
+obj_gamma
+snapshot.vox1
+snapshot.vox2
+obj_delta
+snapshot.vox1
+snapshot.vox2

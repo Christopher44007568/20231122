@@ -1,0 +1,8 @@
+/build/
+/evidence_out/
+/evidence_run*/
+*.o
+evidence_run*/**/*.ppm
+evidence_out/**/*.ppm
+__pycache__/
+*.pyc

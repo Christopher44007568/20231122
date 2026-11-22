@@ -1,0 +1,77 @@
+; Fullscreen triangle. Outputs pixel-center UV via Location 0.
+cap Shader
+extinst %glsl = "GLSL.std.450"
+memmodel Logical GLSL450
+entry Vertex %main "main" %vid %position %outuv
+
+decorate %vid BuiltIn VertexIndex
+decorate %position BuiltIn Position
+decorate %outuv Location 0
+decorate %pc Block
+memberdecorate %pc 0 Offset 0
+memberdecorate %pc 1 Offset 4
+memberdecorate %pc 2 Offset 8
+memberdecorate %pc 3 Offset 12
+name %pc "PushConstants"
+name %main "main"
+
+%void = OpTypeVoid
+%f32 = OpTypeFloat 32
+%i32 = OpTypeInt 32 1
+%v2f = OpTypeVector %f32 2
+%v4f = OpTypeVector %f32 4
+%fn = OpTypeFunction %void
+
+global %c0 = OpConstant %i32 0
+global %c1 = OpConstant %i32 1
+global %c2 = OpConstant %i32 2
+global %c3 = OpConstant %i32 3
+global %f0 = OpConstant %f32 0.0
+global %fhalf = OpConstant %f32 0.5
+global %f2 = OpConstant %f32 2.0
+global %fneg2 = OpConstant %f32 -2.0
+
+global %p0 = OpConstantComposite %v4f %fneg2 %fneg2 %f0 %f0
+global %p1 = OpConstantComposite %v4f %f2 %fneg2 %f0 %f0
+global %p2 = OpConstantComposite %v4f %fneg2 %f2 %f0 %f0
+%arr3t = OpTypeArray %v4f %c3
+global %positions = OpConstantComposite %arr3t %p0 %p1 %p2
+
+%pc = OpTypeStruct %f32 %f32 %f32 %f32
+%ppc = OpTypePointer PushConstant %pc
+%pf32pc = OpTypePointer PushConstant %f32
+%pvi4 = OpTypePointer Input %i32
+%pv4out = OpTypePointer Output %v4f
+%pv2out = OpTypePointer Output %v2f
+%pfuni = OpTypePointer Function %i32
+%pfunv4 = OpTypePointer Function %v4f
+%pfunarr = OpTypePointer Function %v4f
+
+%vid = OpVariable %pvi4 Input
+%position = OpVariable %pv4out Output
+%outuv = OpVariable %pv2out Output
+%pcvar = OpVariable %ppc PushConstant
+
+%main = OpFunction %void 0 %fn
+%entry = OpLabel
+%idx = OpLoad %i32 %vid
+%pap = OpAccessChain %pfunarr %positions %idx
+%pos = OpLoad %v4f %pap
+OpStore %position %pos
+%xw = OpAccessChain %pf32pc %pcvar %c0
+%yh = OpAccessChain %pf32pc %pcvar %c1
+%width = OpLoad %f32 %xw
+%height = OpLoad %f32 %yh
+%px = OpCompositeExtract %f32 %pos 0
+%py = OpCompositeExtract %f32 %pos 1
+; pixel-center coordinates: px in [-2,2] -> (px+2)/2 in [0,1]
+%u01 = OpFAdd %f32 %px %f2
+%u01h = OpFMul %f32 %u01 %fhalf
+%v01 = OpFAdd %f32 %py %f2
+%v01h = OpFMul %f32 %v01 %fhalf
+%uv01 = OpCompositeConstruct %v2f %u01h %v01h
+%wh = OpCompositeConstruct %v2f %width %height
+%pxuv = OpFMul %v2f %uv01 %wh
+OpStore %outuv %pxuv
+OpReturn
+OpFunctionEnd
