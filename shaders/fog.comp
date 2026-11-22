@@ -1,0 +1,239 @@
+#version 450
+
+layout(local_size_x = 8, local_size_y = 8, local_size_z = 1) in;
+
+layout(std140, binding = 0) uniform FogBlock {
+    vec4 camera_pos_seed;
+    vec4 camera_forward_tan;
+    vec4 camera_right_aspect;
+    vec4 camera_up_max_dist;
+    vec4 volume_min_density;
+    vec4 volume_max_extinction;
+    vec4 missing_center_fallback;
+    vec4 missing_half_scatter;
+    vec4 sampling;
+    vec4 frame;
+    vec4 misc;
+} fog;
+
+layout(rgba16f, binding = 1) uniform image2D output_image;
+layout(rgba16f, binding = 2) uniform image2D history_image;
+
+layout(std430, binding = 3) buffer FogStats {
+    uint counters[4];
+} stats;
+
+const float PI = 3.141592653589793;
+
+float hash13(vec3 p)
+{
+    p = fract(p * 0.1031);
+    p += dot(p, p.yzx + 33.33);
+    return fract((p.x + p.y) * p.z);
+}
+
+float value_noise(vec3 p)
+{
+    vec3 cell = floor(p);
+    vec3 f = fract(p);
+    f = f * f * (3.0 - 2.0 * f);
+
+    float n000 = hash13(cell + vec3(0.0, 0.0, 0.0));
+    float n100 = hash13(cell + vec3(1.0, 0.0, 0.0));
+    float n010 = hash13(cell + vec3(0.0, 1.0, 0.0));
+    float n110 = hash13(cell + vec3(1.0, 1.0, 0.0));
+    float n001 = hash13(cell + vec3(0.0, 0.0, 1.0));
+    float n101 = hash13(cell + vec3(1.0, 0.0, 1.0));
+    float n011 = hash13(cell + vec3(0.0, 1.0, 1.0));
+    float n111 = hash13(cell + vec3(1.0, 1.0, 1.0));
+
+    float nx00 = mix(n000, n100, f.x);
+    float nx10 = mix(n010, n110, f.x);
+    float nx01 = mix(n001, n101, f.x);
+    float nx11 = mix(n011, n111, f.x);
+    return mix(mix(nx00, nx10, f.y), mix(nx01, nx11, f.y), f.z);
+}
+
+float fbm(vec3 p, float seed)
+{
+    float value = 0.0;
+    float amplitude = 0.55;
+    float salt = fract(abs(seed) * 0.0000139 + 0.173);
+    vec3 shifted = p + vec3(salt * 31.0,
+                            fract(salt * 3.1) * 23.0,
+                            fract(salt * 5.7) * 19.0);
+    for (int octave = 0; octave < 4; ++octave) {
+        value += amplitude * value_noise(shifted);
+        shifted = shifted * 2.03 + vec3(11.0, 7.0, 13.0) +
+                  vec3(fract(salt * 11.0), fract(salt * 17.0),
+                       fract(salt * 23.0)) * 0.37;
+        amplitude *= 0.48;
+    }
+    return value;
+}
+
+bool point_inside(vec3 p, vec3 center, vec3 half_extent)
+{
+    vec3 q = abs(p - center) - half_extent;
+    return max(q.x, max(q.y, q.z)) <= 0.0;
+}
+
+float density_without_missing(vec3 p, float seed)
+{
+    vec3 q = (p - fog.volume_min_density.xyz) /
+             max(fog.volume_max_extinction.xyz - fog.volume_min_density.xyz,
+                 vec3(0.001));
+    float vertical = smoothstep(0.0, 0.16, q.y) *
+                     smoothstep(1.0, 0.44, q.y);
+    vec3 wind = vec3(fog.frame.x * 0.12, 0.0, fog.frame.x * -0.08);
+    float noise = fbm(p * 0.15 + wind, seed);
+    float wisps = fbm(p * 0.38 + vec3(21.0, 4.0, -17.0) + wind * 2.1,
+                      seed + 9.0);
+    float shape = smoothstep(0.36, 0.64, noise) * (0.64 + 0.36 * wisps);
+    return max(shape * vertical, 0.0) * fog.volume_min_density.w;
+}
+
+bool missing_fragment_at(vec3 p)
+{
+    bool enabled = fog.frame.w > 0.5;
+    return enabled && point_inside(p, fog.missing_center_fallback.xyz,
+                                   fog.missing_half_scatter.xyz);
+}
+
+bool intersect_box(vec3 origin, vec3 direction, vec3 box_min, vec3 box_max,
+                   out float near_t, out float far_t)
+{
+    vec3 inv_dir = 1.0 / direction;
+    vec3 t0 = (box_min - origin) * inv_dir;
+    vec3 t1 = (box_max - origin) * inv_dir;
+    vec3 lo = min(t0, t1);
+    vec3 hi = max(t0, t1);
+    near_t = max(max(lo.x, lo.y), max(lo.z, 0.0));
+    far_t = min(min(hi.x, hi.y), hi.z);
+    return far_t > near_t;
+}
+
+vec3 sky_color(vec3 direction)
+{
+    float horizon = clamp(direction.y * 0.5 + 0.5, 0.0, 1.0);
+    vec3 low = vec3(0.10, 0.15, 0.22);
+    vec3 high = vec3(0.28, 0.38, 0.52);
+    float sun = pow(max(dot(direction, normalize(fog.misc.xyz)), 0.0), 48.0);
+    return mix(low, high, horizon) + vec3(1.0, 0.82, 0.58) * sun * 0.16;
+}
+
+float phase_hg(float cos_theta, float anisotropy)
+{
+    float g = clamp(anisotropy, -0.95, 0.95);
+    float g2 = g * g;
+    float denom = max(1.0 + g2 - 2.0 * g * cos_theta, 1.0e-4);
+    return (1.0 - g2) / (4.0 * PI * pow(denom, 1.5));
+}
+
+void main()
+{
+    ivec2 pixel = ivec2(gl_GlobalInvocationID.xy);
+    int width = int(fog.frame.y);
+    int height = int(fog.frame.z);
+    if (pixel.x >= width || pixel.y >= height) {
+        return;
+    }
+    vec2 uv = (vec2(pixel) + vec2(0.5)) / vec2(width, height);
+    vec2 ndc = uv * 2.0 - 1.0;
+
+    vec3 origin = fog.camera_pos_seed.xyz;
+    vec3 forward = normalize(fog.camera_forward_tan.xyz);
+    vec3 right = normalize(fog.camera_right_aspect.xyz);
+    vec3 up = normalize(fog.camera_up_max_dist.xyz);
+    float tan_half_fov = fog.camera_forward_tan.w;
+    float aspect = fog.camera_right_aspect.w;
+    vec3 direction = normalize(forward +
+        right * (ndc.x * tan_half_fov * aspect) +
+        up * (ndc.y * tan_half_fov));
+
+    vec3 result = sky_color(direction);
+    float near_t = 0.0;
+    float far_t = 0.0;
+    if (intersect_box(origin, direction, fog.volume_min_density.xyz,
+                      fog.volume_max_extinction.xyz, near_t, far_t)) {
+        float max_distance = fog.camera_up_max_dist.w;
+        near_t = max(near_t, 0.0);
+        far_t = min(far_t, max_distance);
+        int steps = max(int(fog.sampling.x + 0.5), 1);
+        float step_size = max(far_t - near_t, 0.0001) / float(steps);
+        float seed = fog.camera_pos_seed.w;
+        float jitter_strength = clamp(fog.sampling.y, 0.0, 1.0);
+        float jitter_hash = hash13(vec3(pixel, fog.frame.x));
+        float jitter = (jitter_hash - 0.5) * jitter_strength;
+        float t = near_t + step_size * (0.5 + jitter);
+
+        float transmittance = 1.0;
+        vec3 scattered = vec3(0.0);
+        float extinction = fog.volume_max_extinction.w;
+        float scattering = fog.missing_half_scatter.w;
+        float anisotropy = fog.sampling.z;
+        vec3 light_direction = normalize(fog.misc.xyz);
+        float phase = phase_hg(dot(direction, light_direction), anisotropy);
+        vec3 light_color = vec3(1.0, 0.72, 0.40) * 3.2;
+        vec3 ambient_color = vec3(0.035, 0.05, 0.085);
+        uint sampled_steps = 0u;
+
+        for (int step_index = 0; step_index < 512; ++step_index) {
+            if (step_index >= steps) {
+                break;
+            }
+            vec3 p = origin + direction * t;
+            ++sampled_steps;
+            bool missing = missing_fragment_at(p);
+            float density = density_without_missing(p, seed);
+            if (missing) {
+                float coarse = density_without_missing(
+                    p * 0.21 + vec3(3.0, 8.0, -2.0), seed + 37.0);
+                float fallback =
+                    clamp(fog.missing_center_fallback.w, 0.0, 1.0);
+                density = mix(density, coarse, fallback);
+                atomicAdd(stats.counters[1], 1u);
+            }
+            density = clamp(density, 0.0,
+                            fog.volume_min_density.w * 2.0);
+            if (density > 0.0) {
+                atomicAdd(stats.counters[3], 1u);
+            }
+            float sigma = density * extinction;
+            float step_opacity = exp(-sigma * step_size);
+            float absorbed = 1.0 - step_opacity;
+            float height_fade = 0.65 + 0.35 * smoothstep(0.0, 42.0, p.y);
+            float density_tint = smoothstep(0.0, 3.0, density);
+            vec3 source = light_color * phase * scattering * height_fade *
+                              (0.18 + 0.82 * density_tint) +
+                          ambient_color * (0.35 + 0.65 * density_tint);
+            scattered += transmittance * absorbed * source;
+            transmittance *= step_opacity;
+            t += step_size;
+            if (transmittance < 0.0002) {
+                break;
+            }
+        }
+        result = scattered + transmittance * sky_color(direction);
+        atomicAdd(stats.counters[0], sampled_steps);
+    }
+
+    if (any(isnan(result)) || any(isinf(result))) {
+        result = vec3(0.0);
+        atomicAdd(stats.counters[2], 1u);
+    }
+
+    vec4 history = imageLoad(history_image, pixel);
+    float history_weight = clamp(history.a, 0.0,
+                                 max(fog.sampling.w, 1.0));
+    float alpha = 1.0 / (history_weight + 1.0);
+    vec3 accumulated = mix(history.rgb, result, alpha);
+    if (any(isnan(accumulated)) || any(isinf(accumulated))) {
+        accumulated = history.rgb;
+        atomicAdd(stats.counters[2], 1u);
+    }
+    accumulated = min(max(accumulated, vec3(0.0)), vec3(64.0));
+    float next_weight = min(history_weight + 1.0,
+                            max(fog.sampling.w, 1.0));
+    imageStore(output_image, pixel, vec4(accumulated, next_weight));
+}
