@@ -1,0 +1,5 @@
+/build/
+/.tmp/
+/artifacts/evidence/
+/artifacts/screenshots/gui_smoke.png
+/artifacts/*.ppm

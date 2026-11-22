@@ -1,0 +1,33 @@
+{
+  "objects": [
+    {
+      "expectedBytes": 3508,
+      "id": "snap-v1",
+      "path": "snapshots/ribbed_sheet_v1.suf",
+      "revision": "v1",
+      "role": "version_snapshot",
+      "sourceOffset": 0,
+      "sourceRevision": "materials/ribbed_sheet.obj@r18"
+    },
+    {
+      "expectedBytes": 96,
+      "id": "unknown-uvx",
+      "path": "records/seam_probe.uvx",
+      "revision": "unknown",
+      "role": "unknown_extension",
+      "sourceOffset": 0,
+      "sourceRevision": "intake:seam-probe@v7"
+    },
+    {
+      "expectedBytes": 3556,
+      "id": "snap-v2",
+      "path": "snapshots/ribbed_sheet_v2.suf",
+      "revision": "v2",
+      "role": "version_snapshot",
+      "sourceOffset": 0,
+      "sourceRevision": "materials/ribbed_sheet.obj@r19"
+    }
+  ],
+  "schema": "surface-unfold-provenance/v1",
+  "surface": "ribbed_sheet"
+}
