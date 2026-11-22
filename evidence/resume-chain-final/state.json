@@ -1,0 +1,16 @@
+{
+  "run_id": "run-2026_11_22T01_03_26_230Z-p483249",
+  "run_dir": "evidence/resume-chain-final",
+  "material_path": "/home/hj/userfeedback2/uid5-0041/material/geometry_input.gsi",
+  "material_sha256": "0765acf779087b18016bdecc3f815ddfd64995aaba2da761ff0113e31a7bc966",
+  "material_size": 1446,
+  "next_anchor": 3,
+  "mode": "full",
+  "backend": "vulkan",
+  "width": 512,
+  "height": 512,
+  "paused": false,
+  "completed": true,
+  "updated_at_utc": "2026-11-22T01:03:26.332Z",
+  "updated_monotonic_ns": 28337920871125
+}

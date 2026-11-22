@@ -1,0 +1,21 @@
+{
+  "run_id": "run-2026_11_22T01_00_53_108Z-p476026",
+  "generated_at_utc": "2026-11-22T01:00:53.309Z",
+  "original_sha256_at_capture": "0765acf779087b18016bdecc3f815ddfd64995aaba2da761ff0113e31a7bc966",
+  "original_sha256_after_resume": "0765acf779087b18016bdecc3f815ddfd64995aaba2da761ff0113e31a7bc966",
+  "original_unchanged": true,
+  "backend_before": "vulkan",
+  "backend_after": "vulkan",
+  "comparison_resource_plan": "evidence/acceptance-compact-20261122/resource_plan_comparison.json",
+  "before": {
+    "a1": {"anchor":1,"anchor_key":"a1","anchor_name":"geometry-output","captured_at_utc":"2026-11-22T01:00:53.227Z","captured_epoch_ms":1795309253227,"captured_monotonic_ns":28184808424730,"source_offset":82,"last_source_offset":1333,"source_end_offset":1446,"payload_path":"checkpoints/01_geometry_output/snapshot.bin","payload_offset":0,"payload_bytes":1536,"payload_sha256":"e1e64f12f7950e6b4b44d609c3c849b4b4f788e88eed15f9740d0bcd6ef7fa0d","element_count":24,"width":256,"height":256,"backend":"vulkan"},
+    "a2": {"anchor":2,"anchor_key":"a2","anchor_name":"composite-output","captured_at_utc":"2026-11-22T01:00:53.259Z","captured_epoch_ms":1795309253259,"captured_monotonic_ns":28184840525561,"source_offset":82,"last_source_offset":1333,"source_end_offset":1446,"payload_path":"checkpoints/02_composite_output/snapshot.bin","payload_offset":0,"payload_bytes":262144,"payload_sha256":"0fb08e45f789f1bc4d2937f815e9534a6e8857efbb63300a1fba313b0d62ab82","element_count":65536,"width":256,"height":256,"backend":"vulkan"}
+  },
+  "after": {
+    "a1": {"captured_at_utc": "2026-11-22T01:00:53.303Z", "captured_epoch_ms": 1795309253303, "captured_monotonic_ns": 28184884533167, "source_offset": 82, "last_source_offset": 1333, "payload_bytes": 1536, "payload_sha256": "e1e64f12f7950e6b4b44d609c3c849b4b4f788e88eed15f9740d0bcd6ef7fa0d"},
+    "a2": {"captured_at_utc": "2026-11-22T01:00:53.308Z", "captured_epoch_ms": 1795309253308, "captured_monotonic_ns": 28184889505156, "source_offset": 82, "last_source_offset": 1333, "payload_bytes": 262144, "payload_sha256": "0fb08e45f789f1bc4d2937f815e9534a6e8857efbb63300a1fba313b0d62ab82"}
+  },
+  "a1": {"before_sha256": "e1e64f12f7950e6b4b44d609c3c849b4b4f788e88eed15f9740d0bcd6ef7fa0d", "after_sha256": "e1e64f12f7950e6b4b44d609c3c849b4b4f788e88eed15f9740d0bcd6ef7fa0d", "identical": true, "first_difference_offset": null, "source_offset": 82},
+  "a2": {"before_sha256": "0fb08e45f789f1bc4d2937f815e9534a6e8857efbb63300a1fba313b0d62ab82", "after_sha256": "0fb08e45f789f1bc4d2937f815e9534a6e8857efbb63300a1fba313b0d62ab82", "identical": true, "first_difference_offset": null, "source_offset": 82},
+  "identical": true
+}

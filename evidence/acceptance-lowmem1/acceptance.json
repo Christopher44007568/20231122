@@ -1,0 +1,23 @@
+{
+  "run_id": "run-2026_11_22T01_01_02_213Z-p476476",
+  "accepted_at_utc": "2026-11-22T01:01:02.345Z",
+  "technical_stack": ["C++17", "Vulkan", "GLFW"],
+  "original": {
+    "path": "/home/hj/userfeedback2/uid5-0041/material/geometry_input.gsi",
+    "preserved_path": "evidence/acceptance-lowmem1/original/geometry_input.gsi",
+    "original_offset": 0,
+    "size": 1446,
+    "sha256_at_capture": "0765acf779087b18016bdecc3f815ddfd64995aaba2da761ff0113e31a7bc966",
+    "sha256_now": "0765acf779087b18016bdecc3f815ddfd64995aaba2da761ff0113e31a7bc966",
+    "preserved_sha256": "0765acf779087b18016bdecc3f815ddfd64995aaba2da761ff0113e31a7bc966",
+    "unchanged": true
+  },
+  "checkpoints": [
+    {"anchor":0,"anchor_key":"a0","anchor_name":"original-input","captured_at_utc":"2026-11-22T01:01:02.250Z","captured_epoch_ms":1795309262250,"captured_monotonic_ns":28193830923197,"source_offset":0,"last_source_offset":1445,"source_end_offset":1446,"payload_path":"checkpoints/00_original_input/snapshot.bin","payload_offset":0,"payload_bytes":1446,"payload_sha256":"0765acf779087b18016bdecc3f815ddfd64995aaba2da761ff0113e31a7bc966","element_count":24,"width":512,"height":512,"backend":"cpu"},
+    {"anchor":1,"anchor_key":"a1","anchor_name":"geometry-output","captured_at_utc":"2026-11-22T01:01:02.273Z","captured_epoch_ms":1795309262273,"captured_monotonic_ns":28193854215303,"source_offset":82,"last_source_offset":1333,"source_end_offset":1446,"payload_path":"checkpoints/01_geometry_output/snapshot.bin","payload_offset":0,"payload_bytes":1536,"payload_sha256":"eb2131b4468ecc6804420cc3711b841f08f6c7ad0a7dafe3a5d21e784793423b","element_count":24,"width":512,"height":512,"backend":"cpu"},
+    {"anchor":2,"anchor_key":"a2","anchor_name":"composite-output","captured_at_utc":"2026-11-22T01:01:02.292Z","captured_epoch_ms":1795309262292,"captured_monotonic_ns":28193873298756,"source_offset":82,"last_source_offset":1333,"source_end_offset":1446,"payload_path":"checkpoints/02_composite_output/snapshot.bin","payload_offset":0,"payload_bytes":1048576,"payload_sha256":"1bbd37042207866b68c7157cee5a8b3819f40f125388e8b0557bcb531f4db288","element_count":262144,"width":512,"height":512,"backend":"cpu"}
+  ],
+  "comparison_file": "evidence/acceptance-lowmem1/comparison.json",
+  "comparison_identical": true,
+  "accepted": true
+}

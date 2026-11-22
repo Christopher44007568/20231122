@@ -1,0 +1,23 @@
+{
+  "backend": "vulkan",
+  "requested_mode": "compact",
+  "selected_mode": "compact",
+  "device_name": "llvmpipe (LLVM 21.1.8, 256 bits)",
+  "driver_name": "driver-version-109051912",
+  "api_version": "1.4.335",
+  "degraded": true,
+  "geometry_shader_supported": true,
+  "vertex_pipeline_stores_supported": true,
+  "cpu_fallback_allowed": true,
+  "heap_bytes": 16431869952,
+  "memory_budget_bytes": 2097152,
+  "required_bytes": 1576614,
+  "input_bytes": 2214,
+  "capture_bytes": 1536,
+  "image_bytes": 262144,
+  "capture_records": 24,
+  "max_storage_buffer_range": 134217728,
+  "width": 256,
+  "height": 256,
+  "reasons": ["reduced offscreen extent to fit memory budget"]
+}

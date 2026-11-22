@@ -1,0 +1,16 @@
+{
+  "run_id": "run-2026_11_22T01_00_53_108Z-p476026",
+  "run_dir": "evidence/acceptance-compact-20261122",
+  "material_path": "/home/hj/userfeedback2/uid5-0041/material/geometry_input.gsi",
+  "material_sha256": "0765acf779087b18016bdecc3f815ddfd64995aaba2da761ff0113e31a7bc966",
+  "material_size": 1446,
+  "next_anchor": 3,
+  "mode": "compact",
+  "backend": "vulkan",
+  "width": 256,
+  "height": 256,
+  "paused": false,
+  "completed": true,
+  "updated_at_utc": "2026-11-22T01:00:53.262Z",
+  "updated_monotonic_ns": 28184843256356
+}

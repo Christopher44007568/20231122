@@ -1,0 +1,23 @@
+{
+  "run_id": "run-2026_11_22T01_03_43_129Z-p483747",
+  "accepted_at_utc": "2026-11-22T01:03:43.255Z",
+  "technical_stack": ["C++17", "Vulkan", "GLFW"],
+  "original": {
+    "path": "/home/hj/userfeedback2/uid5-0041/material/geometry_input.gsi",
+    "preserved_path": "evidence/acceptance-vvl-final/original/geometry_input.gsi",
+    "original_offset": 0,
+    "size": 1446,
+    "sha256_at_capture": "0765acf779087b18016bdecc3f815ddfd64995aaba2da761ff0113e31a7bc966",
+    "sha256_now": "0765acf779087b18016bdecc3f815ddfd64995aaba2da761ff0113e31a7bc966",
+    "preserved_sha256": "0765acf779087b18016bdecc3f815ddfd64995aaba2da761ff0113e31a7bc966",
+    "unchanged": true
+  },
+  "checkpoints": [
+    {"anchor":0,"anchor_key":"a0","anchor_name":"original-input","captured_at_utc":"2026-11-22T01:03:43.162Z","captured_epoch_ms":1795309423162,"captured_monotonic_ns":28354752207828,"source_offset":0,"last_source_offset":1445,"source_end_offset":1446,"payload_path":"checkpoints/00_original_input/snapshot.bin","payload_offset":0,"payload_bytes":1446,"payload_sha256":"0765acf779087b18016bdecc3f815ddfd64995aaba2da761ff0113e31a7bc966","element_count":24,"width":512,"height":512,"backend":"vulkan"},
+    {"anchor":1,"anchor_key":"a1","anchor_name":"geometry-output","captured_at_utc":"2026-11-22T01:03:43.184Z","captured_epoch_ms":1795309423184,"captured_monotonic_ns":28354774470301,"source_offset":82,"last_source_offset":1333,"source_end_offset":1446,"payload_path":"checkpoints/01_geometry_output/snapshot.bin","payload_offset":0,"payload_bytes":1536,"payload_sha256":"e1e64f12f7950e6b4b44d609c3c849b4b4f788e88eed15f9740d0bcd6ef7fa0d","element_count":24,"width":512,"height":512,"backend":"vulkan"},
+    {"anchor":2,"anchor_key":"a2","anchor_name":"composite-output","captured_at_utc":"2026-11-22T01:03:43.208Z","captured_epoch_ms":1795309423208,"captured_monotonic_ns":28354798271504,"source_offset":82,"last_source_offset":1333,"source_end_offset":1446,"payload_path":"checkpoints/02_composite_output/snapshot.bin","payload_offset":0,"payload_bytes":1048576,"payload_sha256":"745464a9bc2af763c4f74632a67fa840159aee2117dbedb6c8069efaa8f060bb","element_count":262144,"width":512,"height":512,"backend":"vulkan"}
+  ],
+  "comparison_file": "evidence/acceptance-vvl-final/comparison.json",
+  "comparison_identical": true,
+  "accepted": true
+}

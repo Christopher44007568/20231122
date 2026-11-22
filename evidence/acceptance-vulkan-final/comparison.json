@@ -1,0 +1,21 @@
+{
+  "run_id": "run-2026_11_22T01_00_01_447Z-p474209",
+  "generated_at_utc": "2026-11-22T01:00:01.575Z",
+  "original_sha256_at_capture": "0765acf779087b18016bdecc3f815ddfd64995aaba2da761ff0113e31a7bc966",
+  "original_sha256_after_resume": "0765acf779087b18016bdecc3f815ddfd64995aaba2da761ff0113e31a7bc966",
+  "original_unchanged": true,
+  "backend_before": "vulkan",
+  "backend_after": "vulkan",
+  "comparison_resource_plan": "evidence/acceptance-vulkan-final/resource_plan_comparison.json",
+  "before": {
+    "a1": {"anchor":1,"anchor_key":"a1","anchor_name":"geometry-output","captured_at_utc":"2026-11-22T01:00:01.510Z","captured_epoch_ms":1795309201510,"captured_monotonic_ns":28133088207456,"source_offset":82,"last_source_offset":1333,"source_end_offset":1446,"payload_path":"checkpoints/01_geometry_output/snapshot.bin","payload_offset":0,"payload_bytes":1536,"payload_sha256":"e1e64f12f7950e6b4b44d609c3c849b4b4f788e88eed15f9740d0bcd6ef7fa0d","element_count":24,"width":512,"height":512,"backend":"vulkan"},
+    "a2": {"anchor":2,"anchor_key":"a2","anchor_name":"composite-output","captured_at_utc":"2026-11-22T01:00:01.536Z","captured_epoch_ms":1795309201536,"captured_monotonic_ns":28133113980392,"source_offset":82,"last_source_offset":1333,"source_end_offset":1446,"payload_path":"checkpoints/02_composite_output/snapshot.bin","payload_offset":0,"payload_bytes":1048576,"payload_sha256":"745464a9bc2af763c4f74632a67fa840159aee2117dbedb6c8069efaa8f060bb","element_count":262144,"width":512,"height":512,"backend":"vulkan"}
+  },
+  "after": {
+    "a1": {"captured_at_utc": "2026-11-22T01:00:01.569Z", "captured_epoch_ms": 1795309201569, "captured_monotonic_ns": 28133146843494, "source_offset": 82, "last_source_offset": 1333, "payload_bytes": 1536, "payload_sha256": "e1e64f12f7950e6b4b44d609c3c849b4b4f788e88eed15f9740d0bcd6ef7fa0d"},
+    "a2": {"captured_at_utc": "2026-11-22T01:00:01.574Z", "captured_epoch_ms": 1795309201574, "captured_monotonic_ns": 28133152493834, "source_offset": 82, "last_source_offset": 1333, "payload_bytes": 1048576, "payload_sha256": "745464a9bc2af763c4f74632a67fa840159aee2117dbedb6c8069efaa8f060bb"}
+  },
+  "a1": {"before_sha256": "e1e64f12f7950e6b4b44d609c3c849b4b4f788e88eed15f9740d0bcd6ef7fa0d", "after_sha256": "e1e64f12f7950e6b4b44d609c3c849b4b4f788e88eed15f9740d0bcd6ef7fa0d", "identical": true, "first_difference_offset": null, "source_offset": 82},
+  "a2": {"before_sha256": "745464a9bc2af763c4f74632a67fa840159aee2117dbedb6c8069efaa8f060bb", "after_sha256": "745464a9bc2af763c4f74632a67fa840159aee2117dbedb6c8069efaa8f060bb", "identical": true, "first_difference_offset": null, "source_offset": 82},
+  "identical": true
+}
