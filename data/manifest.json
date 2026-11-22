@@ -1,0 +1,29 @@
+{
+  "batch": "hdr-atlas-source-check",
+  "objects": [
+    {
+      "expectedBytes": 25247,
+      "id": "snap-v1",
+      "path": "snapshots/hdr_atlas_v1.hdr",
+      "revision": "v1",
+      "role": "version_snapshot"
+    },
+    {
+      "expectedBytes": 8192,
+      "id": "tile-07",
+      "path": "records/hdr_atlas_tile_07.partial",
+      "revision": "transfer-07",
+      "role": "truncated_record",
+      "sourceOffset": 18432,
+      "sourceRevision": "v2"
+    },
+    {
+      "expectedBytes": 25247,
+      "id": "snap-v2",
+      "path": "snapshots/hdr_atlas_v2.hdr",
+      "revision": "v2",
+      "role": "version_snapshot"
+    }
+  ],
+  "schema": "hdrprovenance/1"
+}
