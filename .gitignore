@@ -1,0 +1,5 @@
+/build/
+/build-*/
+/artifacts/latest/
+*.spv.tmp
+
