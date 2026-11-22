@@ -1,0 +1,5 @@
+build/
+artifacts/run-*/
+artifacts/cases/
+*.o
+*.spv.tmp
