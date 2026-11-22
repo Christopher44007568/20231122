@@ -1,0 +1,151 @@
+{
+  "schema": "msphere.energy/1",
+  "title": "材质球能量对照：重复对象异常证据",
+  "run": {
+    "started_at_utc": "2026-11-22T02:57:08.514033Z",
+    "finished_at_utc": "2026-11-22T02:57:08.645628Z",
+    "elapsed_us": 131595
+  },
+  "input": {
+    "source_path": "materials/original.material",
+    "preserved_path": "evidence/acceptance/original/original.material",
+    "sha256_before": "a861013f86ebd36bee88aecda9e1fe9aa1a33c50c841e032303c3ec249d996b8",
+    "sha256_after": "a861013f86ebd36bee88aecda9e1fe9aa1a33c50c841e032303c3ec249d996b8",
+    "source_unchanged": true,
+    "file_size": 8544,
+    "material_count": 8,
+    "reflection_width": 64,
+    "reflection_height": 32,
+    "material_offset": 64,
+    "reflection_offset": 320,
+    "energy_offset": 8512,
+    "energy_integral_offset": 8512
+  },
+  "device": {
+    "cxx_standard": "C++17",
+    "application_api_version": "1.1.0",
+    "glfw_version": "3.4.0 Wayland X11 GLX Null EGL OSMesa monotonic shared",
+    "glfw_platform": "Null",
+    "vulkan_api_version": "1.4.335",
+    "device_name": "llvmpipe (LLVM 21.1.8, 256 bits)",
+    "driver_name": "0x06800008 (109051912)",
+    "vendor_id": 65541,
+    "device_id": 0,
+    "queue_family": 0,
+    "color_format": "R8G8B8A8_UNORM",
+    "timestamp_period_ns": 1,
+    "timestamp_supported": true
+  },
+  "anomaly": {
+    "instance_index": 5,
+    "material_index": 5,
+    "material_count": 8,
+    "field": "base_color.r",
+    "source_file_offset": 224,
+    "original_value": 0.92,
+    "mutated_value": 0.025,
+    "original_bits": 1064011039,
+    "mutated_bits": 1020054733,
+    "original_bytes_hex": "1f856b3f",
+    "mutated_bytes_hex": "cdcccc3c"
+  },
+  "correlation": {
+    "anomaly_instance": 5,
+    "relative_instance": 5,
+    "draw_call_sequence": 2,
+    "source_material_offset": 224,
+    "gpu_material_buffer_offset": 160,
+    "framebuffer": "0x00005d36c34b59c0",
+    "color_image": "0x00005d36c3450160",
+    "first_diff_raw_rgba_offset": 293324,
+    "first_diff_pixel": 73331,
+    "first_diff_xy": [371, 76],
+    "diff_bounds": [286, 76, 462, 252],
+    "instance_screen_cell": [283, 73, 467, 257]
+  },
+  "timestamps": [
+    {"name": "run_start", "timestamp_utc": "2026-11-22T02:57:08.514054Z", "elapsed_us": 21, "detail": "self-test process entered"},
+    {"name": "input_validated", "timestamp_utc": "2026-11-22T02:57:08.515492Z", "elapsed_us": 1462, "detail": "materials=8, bytes=8544"},
+    {"name": "original_preserved", "timestamp_utc": "2026-11-22T02:57:08.515693Z", "elapsed_us": 1662, "detail": "byte-for-byte copy at evidence/acceptance/original/original.material"},
+    {"name": "empty_input_checked", "timestamp_utc": "2026-11-22T02:57:08.515717Z", "elapsed_us": 1685, "detail": "code=empty, raw_offset=0"},
+    {"name": "oversized_input_checked", "timestamp_utc": "2026-11-22T02:57:08.515747Z", "elapsed_us": 1715, "detail": "code=too_large, raw_offset=8388608"},
+    {"name": "render_start", "timestamp_utc": "2026-11-22T02:57:08.515748Z", "elapsed_us": 1716, "detail": "GLFW null platform + Vulkan offscreen"},
+    {"name": "baseline_rendered", "timestamp_utc": "2026-11-22T02:57:08.570943Z", "elapsed_us": 56915, "detail": "gpu=12766501.000000 ns"},
+    {"name": "anomaly_rendered", "timestamp_utc": "2026-11-22T02:57:08.570949Z", "elapsed_us": 56917, "detail": "gpu=4805155.000000 ns"},
+    {"name": "framebuffers_written", "timestamp_utc": "2026-11-22T02:57:08.645183Z", "elapsed_us": 131179, "detail": "raw RGBA + PNG + amplified difference"},
+    {"name": "checks_evaluated", "timestamp_utc": "2026-11-22T02:57:08.645396Z", "elapsed_us": 131364, "detail": "12/12 passed"},
+    {"name": "report_written", "timestamp_utc": "2026-11-22T02:57:08.645623Z", "elapsed_us": 131591, "detail": "evidence/acceptance/report.json"},
+    {"name": "acceptance_written", "timestamp_utc": "2026-11-22T02:57:08.645624Z", "elapsed_us": 131591, "detail": "evidence/acceptance/acceptance.md"},
+    {"name": "run_end", "timestamp_utc": "2026-11-22T02:57:08.645625Z", "elapsed_us": 131592, "detail": "all evidence captured and serialized"}
+  ],
+  "draw_calls": [
+    {"sequence": 1, "frame": "baseline", "first_index": 0, "index_count": 12288, "vertex_offset": 0, "first_instance": 0, "instance_count": 8, "command_buffer": "0x00005d36c3456550", "framebuffer": "0x00005d36c34b59c0", "color_image": "0x00005d36c3450160", "depth_image": "0x00005d36c34504b0", "material_buffer": "0x00005d36c33fc550", "instance_buffer": "0x00005d36c3430dd0", "material_byte_offset": 0, "instance_byte_offset": 0, "material_content_sha256": "08ddb6b3968b91e75895e3167856158f80155cab79a655a64e23c88ec288bbd9", "gpu_start_tick": 35160582661204, "gpu_end_tick": 35160595427705, "gpu_elapsed_ns": 12766501.000, "gpu_timestamp_valid": true},
+    {"sequence": 2, "frame": "anomaly", "first_index": 0, "index_count": 12288, "vertex_offset": 0, "first_instance": 0, "instance_count": 8, "command_buffer": "0x00005d36c3456550", "framebuffer": "0x00005d36c34b59c0", "color_image": "0x00005d36c3450160", "depth_image": "0x00005d36c34504b0", "material_buffer": "0x00005d36c33fc550", "instance_buffer": "0x00005d36c3430dd0", "material_byte_offset": 0, "instance_byte_offset": 0, "material_content_sha256": "ca65e17b85c23e840cea09a305af3af7776043995fcaff32568fe9fd761b1955", "gpu_start_tick": 35160597459751, "gpu_end_tick": 35160602264906, "gpu_elapsed_ns": 4805155.000, "gpu_timestamp_valid": true}
+  ],
+  "resources": {
+    "buffers": [
+      {"name": "vertex_buffer", "handle": "0x00005d36c3430cb0", "size": 51480, "usage": 128, "content_sha256": "4c724542597372a7e1479af2599bfe9e3fabab8b0c0550ebed456f9a8a1eeb26"},
+      {"name": "index_buffer", "handle": "0x00005d36c3430c20", "size": 24576, "usage": 64, "content_sha256": "1bb3fa94b57afccbd2697b86841537b41c25a8322e46b2c45b4aad50a97ed6d4"},
+      {"name": "instance_buffer", "handle": "0x00005d36c3430dd0", "size": 128, "usage": 32, "content_sha256": "2787697d539d680aea54fc7201c98f152cc11be45397e8fc4b28323deef04743"},
+      {"name": "material_buffer", "handle": "0x00005d36c33fc550", "size": 256, "usage": 32, "content_sha256": "08ddb6b3968b91e75895e3167856158f80155cab79a655a64e23c88ec288bbd9"},
+      {"name": "readback_buffer", "handle": "0x00005d36c3430ef0", "size": 2073600, "usage": 2, "content_sha256": "560ebe55cbf360efb70fe3d3d0dc01caa5e65517613a6770d1b935a8ef0613f2"}
+    ],
+    "images": [
+      {"name": "color_framebuffer", "handle": "0x00005d36c3450160", "view": "0x00005d36c34b00d0", "width": 960, "height": 540, "format": "R8G8B8A8_UNORM", "usage": 17, "layout_before": "UNDEFINED", "layout_after": "COLOR_ATTACHMENT_OPTIMAL", "layout_transitions": "UNDEFINED->COLOR_ATTACHMENT_OPTIMAL; render; ->TRANSFER_SRC_OPTIMAL; readback; ->COLOR_ATTACHMENT_OPTIMAL; repeat"},
+      {"name": "depth_framebuffer", "handle": "0x00005d36c34504b0", "view": "0x00005d36c3450e00", "width": 960, "height": 540, "format": "D32_SFLOAT", "usage": 32, "layout_before": "UNDEFINED", "layout_after": "DEPTH_STENCIL_ATTACHMENT_OPTIMAL", "layout_transitions": "UNDEFINED->DEPTH_STENCIL_ATTACHMENT_OPTIMAL; render; repeat"},
+      {"name": "reflection_sphere", "handle": "0x00005d36c345fd40", "view": "0x00005d36c34560c0", "width": 64, "height": 32, "format": "R8G8B8A8_UNORM", "usage": 6, "layout_before": "UNDEFINED", "layout_after": "SHADER_READ_ONLY_OPTIMAL", "layout_transitions": "UNDEFINED->TRANSFER_DST_OPTIMAL->SHADER_READ_ONLY_OPTIMAL"}
+    ]
+  },
+  "framebuffers": [
+    {"frame": "baseline", "width": 960, "height": 540, "pixel_format": "RGBA8"},
+    {"frame": "anomaly", "width": 960, "height": 540, "pixel_format": "RGBA8"}
+  ],
+  "energy_comparison": [
+    {"instance_index": 0, "expected_energy_integral": 0.72, "cell": [72, 283, 256, 467], "baseline_mean_luma": 0.445, "anomaly_mean_luma": 0.445, "relative_change": 0},
+    {"instance_index": 1, "expected_energy_integral": 0.81, "cell": [283, 283, 467, 467], "baseline_mean_luma": 0.531, "anomaly_mean_luma": 0.531, "relative_change": 0},
+    {"instance_index": 2, "expected_energy_integral": 0.64, "cell": [493, 283, 677, 467], "baseline_mean_luma": 0.526, "anomaly_mean_luma": 0.526, "relative_change": 0},
+    {"instance_index": 3, "expected_energy_integral": 0.88, "cell": [704, 283, 888, 467], "baseline_mean_luma": 0.535, "anomaly_mean_luma": 0.535, "relative_change": 0},
+    {"instance_index": 4, "expected_energy_integral": 0.69, "cell": [72, 73, 256, 257], "baseline_mean_luma": 0.426, "anomaly_mean_luma": 0.426, "relative_change": 0},
+    {"instance_index": 5, "expected_energy_integral": 0.84, "cell": [283, 73, 467, 257], "baseline_mean_luma": 0.494, "anomaly_mean_luma": 0.446, "relative_change": -0.0978},
+    {"instance_index": 6, "expected_energy_integral": 0.77, "cell": [493, 73, 677, 257], "baseline_mean_luma": 0.587, "anomaly_mean_luma": 0.587, "relative_change": 0},
+    {"instance_index": 7, "expected_energy_integral": 0.58, "cell": [704, 73, 888, 257], "baseline_mean_luma": 0.409, "anomaly_mean_luma": 0.409, "relative_change": 0}
+  ],
+  "image_difference": {
+    "differing_pixels": 24519,
+    "differing_bytes": 24519,
+    "max_channel_delta": 85,
+    "mean_channel_delta": 0.686,
+    "first_differing_pixel": 73331,
+    "first_differing_raw_offset": 293324,
+    "bounds": {"valid": true, "min_x": 286, "min_y": 76, "max_x": 462, "max_y": 252}
+  },
+  "invalid_inputs": [
+    {"case": "empty_input", "checked_at_utc": "2026-11-22T02:57:08.515701Z", "elapsed_us": 1669, "input_path": "evidence/acceptance/inputs/empty.material", "file_size": 0, "max_bytes": 8388608, "error_code": "empty", "field": "input", "detail": "input is empty", "raw_offset": 0, "observed": 0, "limit": 64},
+    {"case": "oversized_input", "checked_at_utc": "2026-11-22T02:57:08.515726Z", "elapsed_us": 1694, "input_path": "evidence/acceptance/inputs/oversized.material", "file_size": 8388609, "max_bytes": 8388608, "error_code": "too_large", "field": "input", "detail": "input exceeds the configured byte limit", "raw_offset": 8388608, "observed": 8388609, "limit": 8388608}
+  ],
+  "acceptance_checks": [
+    {"id": "input.valid", "passed": true, "expected": "valid MSPHERE1 package", "actual": "valid"},
+    {"id": "original.byte_identical", "passed": true, "expected": "source hash before == after", "actual": "a861013f86ebd36bee88aecda9e1fe9aa1a33c50c841e032303c3ec249d996b8 == a861013f86ebd36bee88aecda9e1fe9aa1a33c50c841e032303c3ec249d996b8"},
+    {"id": "input.offsets", "passed": true, "expected": "material=64, reflection=mat_end, energy=reflection_end, file_size=energy_end", "actual": "material=64, reflection=320, energy=8512, file_size=8544"},
+    {"id": "draw_calls.repeated_object", "passed": true, "expected": "two instanced draw calls, first_instance=0, instance_count=8", "actual": "baseline=8, anomaly=8"},
+    {"id": "gpu.timestamps", "passed": true, "expected": "both frames have non-zero timestamp query results", "actual": "baseline=12766501.000000 ns, anomaly=4805155.000000 ns"},
+    {"id": "framebuffer.extent", "passed": true, "expected": "960x540 RGBA8 readback", "actual": "960x540 RGBA8 readback"},
+    {"id": "image.difference", "passed": true, "expected": ">1000 differing pixels", "actual": "24519 pixels"},
+    {"id": "image.difference.localized", "passed": true, "expected": "all differences inside anomaly instance screen cell", "actual": "inside=24519, outside=0"},
+    {"id": "energy.target_change", "passed": true, "expected": "|relative change| >= 0.05", "actual": "-0.097829"},
+    {"id": "empty_input.rejected", "passed": true, "expected": "empty, raw_offset=0", "actual": "empty, raw_offset=0"},
+    {"id": "oversized_input.rejected", "passed": true, "expected": "too_large at first rejected byte 8388608", "actual": "too_large, raw_offset=8388608, observed=8388609"},
+    {"id": "resource.reflection_layout", "passed": true, "expected": "reflection sphere uploaded to SHADER_READ_ONLY_OPTIMAL", "actual": "SHADER_READ_ONLY_OPTIMAL"}
+  ],
+  "artifacts": [
+    {"role": "framebuffer.baseline.raw", "path": "evidence/acceptance/frames/baseline.rgba", "size": 2073600, "sha256": "8ebd051ecd375cdbc716a532d600c5f6c1c20c009b1f82876f2d35c530cf367f", "layout": "RGBA8 row-major, width*height*4, first_diff_offset=293324"},
+    {"role": "framebuffer.anomaly.raw", "path": "evidence/acceptance/frames/anomaly.rgba", "size": 2073600, "sha256": "c21fb6242e8b5fe26090f8267696ef2e8691a21b4493d62f32b761f934d590f6", "layout": "RGBA8 row-major, width*height*4, first_diff_offset=293324"},
+    {"role": "framebuffer.baseline.png", "path": "evidence/acceptance/frames/baseline.png", "size": 1555923, "sha256": "d0fc81e29704f9f742cb838820b07d5e21e3c4895053010734419579cbc3bff6", "layout": "PNG RGB8"},
+    {"role": "framebuffer.anomaly.png", "path": "evidence/acceptance/frames/anomaly.png", "size": 1555923, "sha256": "05f3fdbd10644dfcd6d7f508b9d70612acab48ea82f7fdac33223f1f0c50820f", "layout": "PNG RGB8"},
+    {"role": "framebuffer.difference.png", "path": "evidence/acceptance/frames/difference.png", "size": 1555923, "sha256": "06e41182dd44d14517b2ff0c27a8b268191005239ab86fd97aede398eb182a84", "layout": "PNG RGB8, channel delta * 8"},
+    {"role": "original.unmodified", "path": "evidence/acceptance/original/original.material", "size": 8544, "sha256": "a861013f86ebd36bee88aecda9e1fe9aa1a33c50c841e032303c3ec249d996b8", "layout": "byte-for-byte input copy"},
+    {"role": "original.sha256", "path": "evidence/acceptance/original.sha256", "size": 84, "sha256": "1d22d587f601b874b6ecf762e0749c28ecf5eeabec9f75eba2efca4f92e3aeb0", "layout": "sha256sum compatible"},
+    {"role": "invalid.empty_input.json", "path": "evidence/acceptance/empty_input.json", "size": 390, "sha256": "30bac00203221d4be40988c4533fc1508171631a0ddd811b2234d906540cc094", "layout": "JSON"},
+    {"role": "invalid.oversized_input.json", "path": "evidence/acceptance/oversized_input.json", "size": 450, "sha256": "b356dbf009d98ef29489b0782b784486def9c8fd28897311dfe44695873a8701", "layout": "JSON"}
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "schema": "msphere.energy.invalid/1",
+  "case": "empty_input",
+  "checked_at_utc": "2026-11-22T02:57:08.515701Z",
+  "elapsed_us": 1669,
+  "input_path": "evidence/acceptance/inputs/empty.material",
+  "file_size": 0,
+  "max_bytes": 8388608,
+  "rejected": true,
+  "error_code": "empty",
+  "field": "input",
+  "detail": "input is empty",
+  "raw_offset": 0,
+  "observed": 0,
+  "limit": 64
+}
