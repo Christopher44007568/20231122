@@ -1,0 +1,175 @@
+#version 450
+layout(local_size_x = 32) in;
+
+struct InstanceRecord {
+  uint case_id;
+  uint repeat_index;
+  float tangent_x;
+  float tangent_y;
+  float tangent_z;
+  float bitangent_x;
+  float bitangent_y;
+  float bitangent_z;
+  float normal_geo_x;
+  float normal_geo_y;
+  float normal_geo_z;
+  uint pixel_index;
+  uint green_flip;
+  uint reserved;
+};
+
+struct ResultRecord {
+  uint instance_offset_lo;
+  uint instance_offset_hi;
+  uint evidence_offset_lo;
+  uint evidence_offset_hi;
+  uint check_digest0;
+  uint check_digest1;
+  uint check_digest2;
+  uint check_digest3;
+  uint check_digest4;
+  uint check_digest5;
+  uint check_digest6;
+  uint check_digest7;
+  uint instance_index;
+  uint case_id;
+  uint fail_mask;
+  uint backend;
+  float worst_metric;
+  float metric0;
+  float metric1;
+  float metric2;
+  float metric3;
+  float metric4;
+  float metric5;
+  float metric6;
+  float metric_pad;
+  uint tail_pad0;
+  uint tail_pad1;
+  uint tail_pad2;
+  uint tail_pad3;
+  uint tail_pad4;
+  uint tail_pad5;
+  uint tail_pad6;
+  uint tail_pad7;
+};
+
+layout(std430, binding = 0) readonly buffer Instances {
+  InstanceRecord instances[];
+};
+layout(std430, binding = 1) readonly buffer Pixels {
+  uint pixels[];
+};
+layout(std430, binding = 2) writeonly buffer Results {
+  ResultRecord results[];
+};
+layout(std430, binding = 3) readonly buffer Params {
+  uint total_instances;
+  uint first_instance;
+  float eps_orthogonal;
+  float eps_unit;
+  float eps_normal_z;
+};
+
+float quantize_metric(float v) {
+  if (!isnan(v) && !isinf(v)) {
+    return round(v * 1.0e6) * 1.0e-6;
+  }
+  return 9.999999e9;
+}
+
+void main() {
+  uint idx = gl_GlobalInvocationID.x;
+  if (idx >= total_instances) return;
+
+  InstanceRecord q = instances[idx];
+  vec3 t = vec3(q.tangent_x, q.tangent_y, q.tangent_z);
+  vec3 b = vec3(q.bitangent_x, q.bitangent_y, q.bitangent_z);
+  vec3 ng = vec3(q.normal_geo_x, q.normal_geo_y, q.normal_geo_z);
+
+  float m0 = abs(dot(t, b));
+  uint fail = 0u;
+  if (m0 > eps_orthogonal) fail |= (1u << 0);
+
+  float m1 = abs(length(t) - 1.0);
+  if (m1 > eps_unit) fail |= (1u << 1);
+
+  float handed = dot(cross(t, b), ng);
+  float m2 = handed;
+  if (m2 <= 0.0) fail |= (1u << 2);
+
+  float m3 = abs(handed);
+  if (m3 <= eps_orthogonal) fail |= (1u << 3);
+
+  uint packed_px = pixels[q.pixel_index];
+  float pr = float(packed_px & 0xFFu);
+  float pg = float((packed_px >> 8) & 0xFFu);
+  float pb = float((packed_px >> 16) & 0xFFu);
+  float nx = (pr / 255.0) * 2.0 - 1.0;
+  float ny = (pg / 255.0) * 2.0 - 1.0;
+  if (q.green_flip != 0u) ny = -ny;
+  float nz_raw = (pb / 255.0) * 2.0 - 1.0;
+  vec3 nts = vec3(nx, ny, 0.0);
+  float nz_sq = 1.0 - dot(nts, nts);
+  float nz = nz_sq > 0.0 ? sqrt(nz_sq) : 0.0;
+  vec3 nt = vec3(nx, ny, nz);
+
+  vec3 tn = normalize(t);
+  vec3 bn = normalize(b);
+  vec3 nn = normalize(ng);
+  vec3 world = tn * nt.x + bn * nt.y + nn * nt.z;
+
+  float m4 = abs(length(world) - 1.0);
+  if (m4 > eps_unit) fail |= (1u << 4);
+
+  float m5 = nz_raw;
+  if (m5 <= eps_normal_z) fail |= (1u << 5);
+
+  float m6 = 0.0;
+  if (q.green_flip != 0u) {
+    vec3 gf = vec3(nx, ny, nz_raw);
+    m6 = abs(length(gf) - 1.0);
+    if (m6 > eps_unit) fail |= (1u << 6);
+  }
+
+  ResultRecord r;
+  r.instance_index = idx + first_instance;
+  r.case_id = q.case_id;
+  r.fail_mask = fail;
+  r.backend = 2u;
+  r.metric0 = quantize_metric(m0);
+  r.metric1 = quantize_metric(m1);
+  r.metric2 = quantize_metric(m2);
+  r.metric3 = quantize_metric(m3);
+  r.metric4 = quantize_metric(m4);
+  r.metric5 = quantize_metric(m5);
+  r.metric6 = quantize_metric(m6);
+  r.metric_pad = 0.0;
+  r.tail_pad0 = 0u;
+  r.tail_pad1 = 0u;
+  r.tail_pad2 = 0u;
+  r.tail_pad3 = 0u;
+  r.tail_pad4 = 0u;
+  r.tail_pad5 = 0u;
+  r.tail_pad6 = 0u;
+  r.tail_pad7 = 0u;
+  r.instance_offset_lo = 0u;
+  r.instance_offset_hi = 0u;
+  r.evidence_offset_lo = 0u;
+  r.evidence_offset_hi = 0u;
+  r.worst_metric = quantize_metric(
+      max(max(max(abs(r.metric0), abs(r.metric1)),
+              max(abs(r.metric2), abs(r.metric3))),
+          max(max(abs(r.metric4), abs(r.metric5)), abs(r.metric6))));
+  // SHA-256 digest cannot be produced portably in GLSL; the host fills it
+  // after download using the same routine as the CPU path.
+  r.check_digest0 = 0u;
+  r.check_digest1 = 0u;
+  r.check_digest2 = 0u;
+  r.check_digest3 = 0u;
+  r.check_digest4 = 0u;
+  r.check_digest5 = 0u;
+  r.check_digest6 = 0u;
+  r.check_digest7 = 0u;
+  results[idx] = r;
+}

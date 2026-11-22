@@ -1,0 +1,5 @@
+/build/
+/build-rel/
+/.tmp/
+/out_*/
+/.trash/
