@@ -1,0 +1,5 @@
+build/
+evidence*/
+samples/*.ptdc
+third_party/debs/
+third_party/sysroot/
